@@ -1,0 +1,233 @@
+/* ============================================================================
+   LONGRISE PC — FINTECH RESKIN (variable-override theme layer)
+   ----------------------------------------------------------------------------
+   PURE RESKIN. No structure / layout / UX changes. The compiled app's palette
+   is exposed as Tailwind v4 CSS variables (--color-luxury-*, --color-red-*, …);
+   re-declaring those variables under html[data-skin="…"] recolors every gold /
+   red / amber utility automatically (solid + /opacity variants via color-mix).
+
+   Trustworthy-fintech directions (both dark — same proven structure: only
+   the --color-luxury-*/--color-red-*/--color-orange-*/--color-amber-*/
+   --color-yellow-*/--color-rose-* accent tokens are remapped, base --color-
+   white/black/gray-* are left untouched so every existing text/panel
+   utility keeps working with zero risk):
+     • indigo  — "Aegis Indigo"  deep navy / electric institutional blue
+     • vault   — "Vault"         near-black navy, matched directly off the
+                 live stocks.rwa.inc site's own (default) dark theme
+   No data-skin attribute → original LRHP gold/black is untouched.
+
+   DEV (개발 AI) NOTE — a "Vault Sky" light-mode variant of this skin was
+   attempted and reverted (see git history if reviving): the compiled app
+   hardcodes several dark literal colors outside the --color-* token system
+   (custom .glass-panel/.luxury-card classes, 3 landing stat cards, a canvas-
+   drawn hero particle effect, inline style={{background:...}} on the
+   Imperial Vanguard card) that a light flip has to patch one-by-one and
+   still can't fully reach (canvas draws with hardcoded colors in JS, no CSS
+   hook at all). Went back to the dark-base + accent-only approach instead.
+
+   DEV NOTE (개발 AI): skin is chosen by html[data-skin] (set by skin-switcher.js,
+   persisted in localStorage 'lr-skin'). Remove the attribute → original theme.
+   ============================================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap");
+
+/* ============================ A · AEGIS INDIGO ============================= */
+html[data-skin="indigo"]{
+  /* accent (was luxury-gold) */
+  --color-luxury-gold:#5b8cff;
+  --color-luxury-gold-light:#9bb8ff;
+  --color-luxury-gold-dark:#3461d6;
+  /* surfaces (were warm luxury-red panels) */
+  --color-luxury-red:#111726;
+  --color-luxury-red-light:#1b2540;
+  --color-luxury-red-dark:#0c111c;
+  /* remap fiery standard utilities → cool institutional blue */
+  --color-red-900:#1b2540;
+  --color-red-600:#3461d6;
+  --color-red-500:#5b8cff;
+  --color-red-400:#9bb8ff;
+  --color-red-300:#bcd0ff;
+  --color-orange-600:#3f6fe6;
+  --color-orange-500:#5b8cff;
+  --color-amber-600:#3461d6;
+  --color-yellow-400:#9bb8ff;
+  --color-yellow-300:#bcd0ff;
+  --color-rose-400:#7cc0ff;
+  /* display font (was Cinzel) */
+  --font-serif:"Space Grotesk","Inter",ui-sans-serif,system-ui,sans-serif;
+  /* tints used by surface refinements below */
+  --skin-bg:#080b12;
+  --skin-bg-glow:#111a30;
+  --skin-line:rgba(123,156,224,.18);
+  --skin-accent:#5b8cff;
+  --skin-accent-light:#9bb8ff;
+  --skin-text:#eaf0fb;
+  --skin-muted:#93a2c4;
+}
+
+/* ============================== B · VAULT ==================================
+   Full pixel-level clone of stocks.rwa.inc's dark theme — colors, fonts,
+   card treatment, and button/nav styling all measured directly off the
+   live site's computed styles (not read off minified CSS text), so this
+   should track visually 1:1 rather than "in the spirit of":
+     body bg          rgb(1,4,19) = #010413
+     heading font      "Playfair Display", Georgia, serif
+     body/UI font      "DM Sans", ui-sans-serif, system-ui, sans-serif
+     body text         #e0e0e0 · headings #fff · muted text rgba(255,255,255,.72)
+     accent/kicker     #7ab8ff (light) · #0356f8→#0020e0 (CTA gradient)
+     card              radial-gradient(circle at 100% 0%, rgba(3,86,248,.12),
+                         transparent 42%), linear-gradient(145deg,
+                         rgba(5,9,26,.92), rgba(8,15,36,.7)), 1px solid
+                         rgba(96,165,250,.16), radius 16px, blur(18px),
+                         shadow 0 24px 76px rgba(0,0,0,.3) + inset highlight
+     primary button    linear-gradient(135deg, rgba(3,86,248,.95),
+                         rgba(0,32,224,.72)), 1px solid rgba(96,165,250,.34),
+                         radius 14px, shadow 0 18px 46px rgba(3,86,248,.26)
+   ============================================================================ */
+html[data-skin="vault"]{
+  /* accent (was luxury-gold) — rwa.inc's exact CTA gradient endpoints */
+  --color-luxury-gold:#0356f8;
+  --color-luxury-gold-light:#7ab8ff;
+  --color-luxury-gold-dark:#0020e0;
+  /* surfaces (were warm luxury-red panels) */
+  --color-luxury-red:#05091a;
+  --color-luxury-red-light:#080f24;
+  --color-luxury-red-dark:#03060f;
+  /* remap fiery standard utilities → the same vivid blue */
+  --color-red-900:#080f24;
+  --color-red-600:#0356f8;
+  --color-red-500:#2563eb;
+  --color-red-400:#60a5fa;
+  --color-red-300:#93c5fd;
+  --color-orange-600:#1d4ed8;
+  --color-orange-500:#2563eb;
+  --color-amber-600:#0020e0;
+  --color-yellow-400:#60a5fa;
+  --color-yellow-300:#93c5fd;
+  --color-rose-400:#3b82f6;
+  /* fonts — rwa.inc's exact pairing, both are themeable Tailwind v4 vars */
+  --font-serif:"Playfair Display",Georgia,"Times New Roman",serif;
+  --font-sans:"DM Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  /* tints used by surface refinements below — rwa.inc's exact bg #010413 */
+  --skin-bg:#010413;
+  --skin-bg-glow:#0a1636;
+  --skin-line:rgba(96,165,250,.16);
+  --skin-accent:#0356f8;
+  --skin-accent-light:#7ab8ff;
+  --skin-text:#e0e0e0;
+  --skin-muted:rgba(255,255,255,.72);
+}
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap");
+/* card treatment — .glass-panel/.luxury-card hardcode a dark warm gradient
+   (see DEV NOTE above), replaced 1:1 with rwa.inc's measured card recipe. */
+html[data-skin="vault"] .glass-panel{
+  background:
+    radial-gradient(circle at 100% 0%, rgba(3,86,248,.12), rgba(0,0,0,0) 42%),
+    linear-gradient(145deg, rgba(5,9,26,.92), rgba(8,15,36,.7)) !important;
+  border-color:rgba(96,165,250,.16) !important;
+  -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+  box-shadow:0 24px 76px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.043) inset !important;
+}
+html[data-skin="vault"] .luxury-card{
+  background:
+    radial-gradient(circle at 100% 0%, rgba(3,86,248,.12), rgba(0,0,0,0) 42%),
+    linear-gradient(145deg, rgba(5,9,26,.92), rgba(8,15,36,.7)) !important;
+  border-color:rgba(96,165,250,.16) !important;
+}
+/* nav active-tab pill — rwa.inc's measured treatment (gradient fill +
+   inset ring) instead of the shared glow-ring rule other skins use. */
+html[data-skin="vault"] .shadow-\[0_0_15px_rgba\(220\2c 38\2c 38\2c 0\.2\)\]{
+  background:linear-gradient(135deg, rgba(3,86,248,.24), rgba(0,32,224,.18)) !important;
+  box-shadow:0 0 0 1px rgba(96,165,250,.14) inset !important;
+}
+/* primary CTA-style buttons — same gradient/border/shadow recipe as
+   rwa.inc's "Start Trading" button. */
+html[data-skin="vault"] .earn-pc .btn-gold{
+  background:linear-gradient(135deg, rgba(3,86,248,.95), rgba(0,32,224,.72)) !important;
+  border:1px solid rgba(96,165,250,.34);
+  box-shadow:0 18px 46px rgba(3,86,248,.26) !important;
+  color:#fff !important;
+}
+
+/* ===================== shared surface refinements ========================= */
+/* Cool, flat base — overrides the warm radial in index.html's inline <style>. */
+html[data-skin] body{
+  background-color:var(--skin-bg) !important;
+  background-image:radial-gradient(125% 80% at 50% 0%, var(--skin-bg-glow) 0%, var(--skin-bg) 58%) !important;
+}
+html[data-skin]{ background-color:var(--skin-bg); }
+
+/* Kill the casino gold/red glow shadows on active nav tabs (arbitrary classes)
+   — recolor them to a clean accent ring instead. */
+html[data-skin] .shadow-\[0_0_15px_rgba\(220\2c 38\2c 38\2c 0\.2\)\]{
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--skin-accent) 45%, transparent),
+             0 6px 20px -10px color-mix(in oklab, var(--skin-accent) 55%, transparent) !important;
+}
+
+/* Display headings: tighten the now-sans display font (Cinzel was looser). */
+html[data-skin] .font-serif{ letter-spacing:-0.01em; }
+
+/* ---- EARN page (.earn-pc) — recolor its self-contained gold tokens ---- */
+html[data-skin] .earn-pc{
+  --gold-base:var(--skin-accent);
+  --gold-highlight:var(--skin-accent-light);
+  --gold-glow:var(--skin-accent);
+  --gold-deep:var(--color-luxury-gold-dark);
+  --ink:var(--skin-bg);
+  --void:var(--color-luxury-red-dark);
+  --panel:var(--color-luxury-red);
+  --cream:var(--skin-text);
+  --muted:var(--skin-muted);
+  --line-soft:var(--skin-line);
+  --line-mid:color-mix(in oklab, var(--skin-accent) 30%, transparent);
+}
+html[data-skin] .earn-pc .card.hero{
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in oklab, var(--skin-accent) 12%, transparent), transparent 55%),
+    linear-gradient(180deg, var(--color-luxury-red-light), var(--color-luxury-red-dark));
+}
+html[data-skin] .earn-pc .btn-gold{ color:#fff; }
+/* EARN display headings follow the skin display font */
+html[data-skin] .earn-pc .display{ font-family:var(--font-serif); }
+
+/* ---- Footer — recolor ported marketing footer ---- */
+html[data-skin] #lr-pc-footer.lr-pc-footer{
+  --gold:var(--skin-accent);
+  --gold-base:var(--skin-accent);
+  background:linear-gradient(180deg, var(--skin-bg) 0%, #000 100%);
+  border-top:1px solid var(--skin-line);
+}
+html[data-skin] #lr-pc-footer .brand{ font-family:var(--font-serif); }
+
+/* ---- injected NEWS & UPDATES nav tab active glow ---- */
+html[data-skin] #lr-nav-news.bg-red-600\/10{
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--skin-accent) 45%, transparent) !important;
+}
+
+/* ============================ skin switcher control ======================= */
+#lr-skin-switch{
+  position:fixed; left:16px; bottom:16px; z-index:2147483000;
+  display:flex; align-items:center; gap:4px;
+  padding:5px 6px 5px 10px; border-radius:999px;
+  background:rgba(12,14,20,.82); backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.8);
+  font-family:"Inter",system-ui,sans-serif;
+}
+#lr-skin-switch .lrs-label{
+  font-size:9.5px; font-weight:800; letter-spacing:.18em; color:rgba(255,255,255,.45);
+  margin-right:4px; user-select:none;
+}
+#lr-skin-switch .lrs-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 12px; border-radius:999px; border:none; cursor:pointer;
+  background:transparent; color:rgba(255,255,255,.62);
+  font-family:inherit; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  transition:background .18s, color .18s;
+}
+#lr-skin-switch .lrs-btn:hover{ color:#fff; background:rgba(255,255,255,.06); }
+#lr-skin-switch .lrs-btn.on{ background:rgba(255,255,255,.12); color:#fff; }
+#lr-skin-switch .lrs-dot{
+  width:9px; height:9px; border-radius:50%; flex:0 0 auto;
+  box-shadow:0 0 0 1px rgba(255,255,255,.25);
+}
+@media print{ #lr-skin-switch{ display:none; } }

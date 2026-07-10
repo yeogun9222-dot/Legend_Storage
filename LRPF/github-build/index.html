@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LongRise AI — LRHP Reskin</title>
+    <!-- Original app bundles — UI structure & UX untouched (modified bundle reskins logo + package-card copy only) -->
+    <script type="module" crossorigin src="./assets/index-reskin.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/ui-Bpxsm5T0.js">
+    <link rel="modulepreload" crossorigin href="./assets/vendor-De2TMoxH.js">
+    <link rel="modulepreload" crossorigin href="./assets/api-DcNlVx-A.js">
+    <!-- LRHP-reskinned stylesheet: same selectors/layout, colors & fonts remapped to design-system tokens -->
+    <link rel="stylesheet" crossorigin href="./reskin/index-lrhp.css">
+    <!-- FINTECH RESKIN theme layer (variable overrides) + live skin switcher. Pure reskin, no structure change. -->
+    <link rel="stylesheet" href="./reskin/skin-fintech.css">
+    <!-- apply persisted skin before first paint (no flash) -->
+    <script>try{var s=localStorage.getItem('lr-skin');if(s)document.documentElement.setAttribute('data-skin',s);}catch(e){}</script>
+    <!-- PC EARN page (네비 01) — replaces CRYPTO AI. CSS augment + DOM overlay; bundle untouched. -->
+    <link rel="stylesheet" href="./reskin/earn-pc.css">
+    <script src="./reskin/candles.js"></script>
+    <script defer src="./reskin/earn-pc.js"></script>
+    <script defer src="./reskin/skin-switcher.js"></script>
+    <!-- Dark base: the app's body background uses background-attachment:fixed, which does not
+         paint in scaled preview iframes. Lay a fixed-free LRHP dark base so the cinematic
+         black/gold look always renders. UI structure & UX untouched. -->
+    <style>
+      /* Maroon-red + gold base, matched to the LongRise mobile reference
+         (LongRise_Mobile View_V15) — the mobile build's hero/landing and
+         card surfaces use a deep blood-red radial vignette over near-black,
+         not the brown tone this file used previously. */
+      html { background-color: #0d0203; }
+      body {
+        background-color: #0d0203 !important;
+        background-image: radial-gradient(120% 80% at 50% 0%, #3d0a0a 0%, #0d0203 60%) !important;
+        background-attachment: scroll !important;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
